@@ -27,7 +27,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("details");
         ch.zli.m223.punchclock.domain.User user = userRepository.findByUsername(username).orElse(null);
         if(user == null) {
             throw new UsernameNotFoundException(username);

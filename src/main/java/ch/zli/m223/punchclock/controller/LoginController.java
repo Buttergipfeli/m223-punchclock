@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
@@ -20,6 +21,7 @@ import java.security.Principal;
  */
 
 @RestController
+@RequestMapping("/login")
 public class LoginController {
 
     @Autowired
@@ -28,15 +30,13 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/api/user/login")
+    @GetMapping
     public ResponseEntity<?> getUser(Principal principal) {
-        System.out.println("login");
         if(principal == null) {
             return ResponseEntity.ok(principal);
         }
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) principal;
-        System.out.println("principal good");
         User user = userService.findByUsername(authenticationToken.getName());
         user.setToken(jwtTokenProvider.generateToken(authenticationToken));
         user.setPassword(null);

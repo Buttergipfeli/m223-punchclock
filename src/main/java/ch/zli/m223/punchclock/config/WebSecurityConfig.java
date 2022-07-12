@@ -10,14 +10,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * Also see https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-cors
- */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -33,27 +33,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomPasswordEncoder();
     }
 
-    // search for this @Override method in WebSecurityConfigurerAdapter as template.
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and()
                 .authorizeRequests()
-                .antMatchers("/api/**").permitAll()
                 .antMatchers("/users/**").hasRole("USER")
                 .anyRequest().fullyAuthenticated()
                 .and()
-                .logout().permitAll()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/api/user/logout", "POST"))
-                .and()
-                .formLogin().loginPage("/api/user/login").and()
-                .httpBasic().and()
-                .csrf().disable();
+                .formLogin().loginPage("/login").and()
+                .httpBasic();
 
         http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtTokenProvider));
+
+        http.sessionManagement() // dont create a session for this configuration
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("/**").allowedMethods("*");
+            }
+        };
+    }
+
 }
