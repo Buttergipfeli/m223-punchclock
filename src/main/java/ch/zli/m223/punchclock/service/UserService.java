@@ -1,8 +1,10 @@
 package ch.zli.m223.punchclock.service;
 
 import ch.zli.m223.punchclock.domain.User;
+import ch.zli.m223.punchclock.repository.RoleRepository;
 import ch.zli.m223.punchclock.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,12 +22,32 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public User findByUsername(String username) {
         return userRepository.findByUsername(username).orElse(null);
     }
 
     public List<User> findAllUsers() {
         return userRepository.findAll();
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public User createUser(User user) {
+        user.setRolefk(roleRepository.findByRole("USER").orElse(null));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+
+    public User updateUser(User user) {
+        return userRepository.save(user);
     }
 
 }

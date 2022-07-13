@@ -6,6 +6,7 @@ import ch.zli.m223.punchclock.jwt.JWTTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -37,7 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and()
                 .authorizeRequests()
-                .antMatchers("/users/**").hasRole("USER")
+                .antMatchers("/users").hasAnyRole("USER", "MODERATOR")
+                .antMatchers(HttpMethod.GET, "/users").hasRole("MODERATOR")
                 .anyRequest().fullyAuthenticated()
                 .and()
                 .formLogin().loginPage("/login").and()
@@ -59,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("/**").allowedMethods("*");
+                registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowedMethods("*");
             }
         };
     }

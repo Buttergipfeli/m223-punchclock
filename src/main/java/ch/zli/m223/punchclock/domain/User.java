@@ -1,6 +1,7 @@
 package ch.zli.m223.punchclock.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 /**
  * @author Andre Kocher
@@ -15,14 +16,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id", name = "rolefk")
+    private Role rolefk;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
     @Column(nullable = false)
     private String username;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    @Min(0)
+    private int wallet;
     @Transient
     private String token;
 
@@ -34,12 +38,12 @@ public class User {
         this.id = id;
     }
 
-    public Role getRole() {
-        return role;
+    public Role getRolefk() {
+        return rolefk;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRolefk(Role rolefk) {
+        this.rolefk = rolefk;
     }
 
     public String getUsername() {
@@ -64,16 +68,5 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", role=" + role +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", token='" + token + '\'' +
-                '}';
     }
 }

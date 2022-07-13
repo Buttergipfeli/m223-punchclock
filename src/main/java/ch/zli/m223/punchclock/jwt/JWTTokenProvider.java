@@ -18,6 +18,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Andre Kocher
+ * @project punchclock
+ * @package ch.zli.m223.punchclock.jwt
+ * @date 12.07.2022
+ */
+
 @Component
 public class JWTTokenProvider {
 
