@@ -35,14 +35,21 @@ public class UserController {
         return new ResponseEntity(userService.findAllUsers(), HttpStatus.OK);
     }
 
-    @GetMapping("/{username}")
-    public ResponseEntity<User> findUserById(@PathVariable("username") String username) {
-        return new ResponseEntity(userService.findByUsername(username), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findUserById(@PathVariable("id") Long id) {
+        User user = userService.findById(id);
+        if (user == null) {
+            return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(user, HttpStatus.OK);
     }
 
     @PostMapping
     @Transactional
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+        if (userService.findByUsername(user.getUsername()) != null) {
+            return new ResponseEntity(user, HttpStatus.CONFLICT);
+        }
         User createdUser = userService.createUser(user);
         createdUser.setPassword(null);
         return new ResponseEntity(createdUser, HttpStatus.CREATED);
@@ -53,20 +60,14 @@ public class UserController {
     public ResponseEntity<User> updateUser(@Valid @RequestBody User user, Principal principal) {
         User editor = userService.findByUsername(principal.getName());
         User changeUser = userService.findById(user.getId());
-        if (changeUser == null) {
+        if (user.getPassword().length() < 1) {
             return new ResponseEntity(user, HttpStatus.BAD_REQUEST);
         }
-        if (editor.getUsername() == user.getUsername()) {
+        if (editor.getRolefk().getRole() == "MODERATOR" || changeUser.getId() == editor.getId()) {
             changeUser.setPassword(passwordEncoder.encode(user.getPassword()));
             return new ResponseEntity(userService.updateUser(changeUser), HttpStatus.OK);
-        } else if (editor.getRolefk().getRole() == "MODERATOR") {
-            if (user.getPassword().length() > 0) {
-                changeUser.setPassword(passwordEncoder.encode(user.getPassword()));
-            }
-            changeUser.setUsername(user.getUsername());
-            return new ResponseEntity(changeUser, HttpStatus.OK);
         }
-        return new ResponseEntity(user, HttpStatus.NOT_FOUND);
+        return new ResponseEntity(user, HttpStatus.UNAUTHORIZED);
     }
 
 }

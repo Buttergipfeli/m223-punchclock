@@ -39,11 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and()
                 .authorizeRequests()
                 .antMatchers("/users").hasAnyRole("USER", "MODERATOR")
-                .antMatchers(HttpMethod.GET, "/users").hasRole("MODERATOR")
+                .antMatchers("/categories", "/mottos").permitAll()
                 .anyRequest().fullyAuthenticated()
                 .and()
                 .formLogin().loginPage("/login").and()
-                .httpBasic();
+                .httpBasic().and().csrf().disable();
 
         http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtTokenProvider));
 

@@ -25,7 +25,6 @@ public class Motto {
     private User ownerfk;
 
     @Column(nullable = false)
-    @Max(1000)
     private String motto;
 
     @Column(nullable = false)
@@ -70,5 +69,16 @@ public class Motto {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Motto{" +
+                "id=" + id +
+                ", categoryfk=" + categoryfk +
+                ", ownerfk=" + ownerfk +
+                ", motto='" + motto + '\'' +
+                ", price=" + price +
+                '}';
     }
 }

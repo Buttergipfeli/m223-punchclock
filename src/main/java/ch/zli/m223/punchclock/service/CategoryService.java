@@ -5,6 +5,8 @@ import ch.zli.m223.punchclock.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author Andre Kocher
  * @project punchclock
@@ -20,6 +22,10 @@ public class CategoryService {
 
     public Category findById(Long id) {
         return categoryRepository.findById(id).orElse(null);
+    }
+
+    public List<Category> findAll() {
+        return categoryRepository.findAll();
     }
 
     public Category createCategory(Category category) {

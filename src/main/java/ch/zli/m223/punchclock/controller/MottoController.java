@@ -34,21 +34,17 @@ public class MottoController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping
-    public ResponseEntity<List<Motto>> getAllMottos() {
-        return new ResponseEntity(mottoService.getAllMottos(), HttpStatus.OK);
-    }
-
     @PostMapping
     @Transactional
     public ResponseEntity<Motto> createMotto(@Valid @RequestBody Motto motto, Principal principal) {
-        if (motto.getCategoryfk().getId() == null) {
-            if (categoryService.findById(motto.getCategoryfk().getId()) == null) {
-                motto.setCategoryfk(categoryService.createCategory(motto.getCategoryfk()));
-            }
-        }
         motto.setOwnerfk(userService.findByUsername(principal.getName()));
+        motto.setCategoryfk(categoryService.findById(motto.getCategoryfk().getId()));
         return new ResponseEntity(mottoService.createMotto(motto), HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Motto>> getAllMottos() {
+        return new ResponseEntity(mottoService.getAllMottos(), HttpStatus.OK);
     }
 
 }
