@@ -41,12 +41,16 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findUserById(@PathVariable("id") Long id) {
+    public ResponseEntity<User> findUserById(@PathVariable("id") Long id, Principal principal) {
         User user = userService.findById(id);
         if (user == null) {
             return new ResponseEntity(null, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(user, HttpStatus.OK);
+        User requester = userService.findByUsername(principal.getName());
+        if (requester.getId() == user.getId() || requester.getRolefk().getRole().equals("MODERATOR")) {
+            return new ResponseEntity(user, HttpStatus.OK);
+        }
+        return new ResponseEntity("No permission", HttpStatus.UNAUTHORIZED);
     }
 
     @PostMapping
@@ -60,15 +64,14 @@ public class UserController {
         return new ResponseEntity(createdUser, HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<User> updateUser(@Valid @RequestBody User user, Principal principal) {
+    public ResponseEntity<User> updateUser(@Valid @RequestBody User user, @PathVariable("id") Long id, Principal principal) {
         User editor = userService.findByUsername(principal.getName());
-        User changeUser = userService.findById(user.getId());
+        User changeUser = userService.findById(id);
         if (user.getPassword().length() < 1) {
             return new ResponseEntity(user, HttpStatus.BAD_REQUEST);
         }
-        System.out.println(editor.getRolefk().getRole());
         if (editor.getRolefk().getRole().equals("MODERATOR") || changeUser.getId() == editor.getId()) {
             changeUser.setPassword(passwordEncoder.encode(user.getPassword()));
             return new ResponseEntity(userService.updateUser(changeUser), HttpStatus.OK);

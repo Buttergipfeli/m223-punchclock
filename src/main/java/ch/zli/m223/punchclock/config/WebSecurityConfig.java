@@ -39,7 +39,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and()
                 .authorizeRequests()
                 .antMatchers("/users").hasAnyRole("USER", "MODERATOR")
-                .antMatchers("/categories", "/mottos").permitAll()
+                .antMatchers(HttpMethod.GET, "/users").hasAnyRole("MODERATOR")
+                .antMatchers(HttpMethod.DELETE, "/users/{id}").hasAnyRole("MODERATOR")
+                .antMatchers(HttpMethod.GET, "/users/{id}").hasAnyRole("MODERATOR", "USER")
+                .antMatchers(HttpMethod.PUT, "/users/{id}").hasAnyRole("MODERATOR", "USER")
+                .antMatchers("/categories").hasAnyRole("USER", "MODERATOR")
+                .antMatchers("/mottopurchases").hasAnyRole("USER", "MODERATOR")
+                .antMatchers("/motto").hasAnyRole("USER", "MODERATOR")
                 .anyRequest().fullyAuthenticated()
                 .and()
                 .formLogin().loginPage("/login").and()
@@ -47,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtTokenProvider));
 
-        http.sessionManagement() // dont create a session for this configuration
+        http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
