@@ -1,8 +1,12 @@
 package ch.zli.m223.punchclock.repository;
 
 import ch.zli.m223.punchclock.domain.Motto;
+import ch.zli.m223.punchclock.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Andre Kocher
@@ -13,4 +17,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MottoRepository extends JpaRepository<Motto, Long> {
+
+    Optional<List<Motto>> findAllByOwnerfk(User user);
+
 }

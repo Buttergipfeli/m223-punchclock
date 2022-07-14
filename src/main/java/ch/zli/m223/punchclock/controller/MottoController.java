@@ -1,6 +1,7 @@
 package ch.zli.m223.punchclock.controller;
 
 import ch.zli.m223.punchclock.domain.Motto;
+import ch.zli.m223.punchclock.domain.User;
 import ch.zli.m223.punchclock.service.CategoryService;
 import ch.zli.m223.punchclock.service.MottoService;
 import ch.zli.m223.punchclock.service.UserService;
@@ -45,11 +46,6 @@ public class MottoController {
     @GetMapping
     public ResponseEntity<List<Motto>> getAllMottos() {
         return new ResponseEntity(mottoService.getAllMottos(), HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteMotto(@PathVariable("id") Long id) {
-
     }
 
 }

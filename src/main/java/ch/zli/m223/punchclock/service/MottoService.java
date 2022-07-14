@@ -26,6 +26,10 @@ public class MottoService {
       return mottoRepository.findAll();
    }
 
+   public List<Motto> getAllMottosByUser(User user) {
+      return mottoRepository.findAllByOwnerfk(user).orElse(null);
+   }
+
    public Motto createMotto(Motto motto) {
       return mottoRepository.save(motto);
    }
@@ -45,6 +49,10 @@ public class MottoService {
    public Motto updatePurchasedMotto(Motto motto, User owner) {
       motto.setOwnerfk(owner);
       return mottoRepository.save(motto);
+   }
+
+   public void deleteAllCertainMottos(List<Motto> mottos) {
+      mottoRepository.deleteAll(mottos);
    }
 
 }
