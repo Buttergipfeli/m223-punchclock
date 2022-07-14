@@ -82,4 +82,16 @@ public class User {
     public void setToken(String token) {
         this.token = token;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", rolefk=" + rolefk +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", wallet=" + wallet +
+                ", token='" + token + '\'' +
+                '}';
+    }
 }

@@ -47,4 +47,9 @@ public class MottoController {
         return new ResponseEntity(mottoService.getAllMottos(), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteMotto(@PathVariable("id") Long id) {
+
+    }
+
 }

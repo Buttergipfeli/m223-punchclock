@@ -9,4 +9,6 @@ INSERT INTO category (category) VALUES ('funny');
 INSERT INTO category (category) VALUES ('not-funny');
 INSERT INTO category (category) VALUES ('motivation');
 
-INSERT INTO motto (categoryfk, ownerfk, motto, price) VALUES ('1', '1', 'Erstes Motto', '20');
+INSERT INTO motto (categoryfk, ownerfk, motto, price) VALUES ('3', '1', 'Geld ist nicht alles, aber alles kostet Geld', '20');
+INSERT INTO motto (categoryfk, ownerfk, motto, price) VALUES ('1', '2', 'Was geht was geht', '30');
+INSERT INTO motto (categoryfk, ownerfk, motto, price) VALUES ('3', '1', 'Ein AMG macht dich glücklicher als eine Frau.', '100');

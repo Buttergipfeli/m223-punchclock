@@ -1,6 +1,8 @@
 package ch.zli.m223.punchclock.service;
 
 import ch.zli.m223.punchclock.domain.Motto;
+import ch.zli.m223.punchclock.domain.User;
+import ch.zli.m223.punchclock.domain.submodels.MottoPurchase;
 import ch.zli.m223.punchclock.repository.MottoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,23 @@ public class MottoService {
    }
 
    public Motto createMotto(Motto motto) {
+      return mottoRepository.save(motto);
+   }
+
+   public Motto findById(Long id) {
+      return mottoRepository.findById(id).orElse(null);
+   }
+
+   public MottoPurchase purchaseMotto(int wallet, Motto motto) {
+      MottoPurchase mottoPurchase = new MottoPurchase();
+      wallet = wallet - motto.getPrice();
+      mottoPurchase.setWallet(wallet);
+      mottoPurchase.setMotto(motto);
+      return mottoPurchase;
+   }
+
+   public Motto updatePurchasedMotto(Motto motto, User owner) {
+      motto.setOwnerfk(owner);
       return mottoRepository.save(motto);
    }
 
