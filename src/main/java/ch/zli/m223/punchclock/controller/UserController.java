@@ -31,7 +31,7 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers(Principal principal) {
+    public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity(userService.findAllUsers(), HttpStatus.OK);
     }
 
@@ -63,7 +63,8 @@ public class UserController {
         if (user.getPassword().length() < 1) {
             return new ResponseEntity(user, HttpStatus.BAD_REQUEST);
         }
-        if (editor.getRolefk().getRole() == "MODERATOR" || changeUser.getId() == editor.getId()) {
+        System.out.println(editor.getRolefk().getRole());
+        if (editor.getRolefk().getRole().equals("MODERATOR") || changeUser.getId() == editor.getId()) {
             changeUser.setPassword(passwordEncoder.encode(user.getPassword()));
             return new ResponseEntity(userService.updateUser(changeUser), HttpStatus.OK);
         }
