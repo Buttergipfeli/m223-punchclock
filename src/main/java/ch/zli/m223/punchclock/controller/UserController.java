@@ -53,17 +53,6 @@ public class UserController {
         return new ResponseEntity("No permission", HttpStatus.UNAUTHORIZED);
     }
 
-    @PostMapping
-    @Transactional
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        if (userService.findByUsername(user.getUsername()) != null) {
-            return new ResponseEntity(user, HttpStatus.CONFLICT);
-        }
-        User createdUser = userService.createUser(user);
-        createdUser.setPassword(null);
-        return new ResponseEntity(createdUser, HttpStatus.CREATED);
-    }
-
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<User> updateUser(@Valid @RequestBody User user, @PathVariable("id") Long id, Principal principal) {

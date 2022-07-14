@@ -40,12 +40,6 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User createUser(User user) {
-        user.setRolefk(roleRepository.findByRole("USER").orElse(null));
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
-
     public User updateUser(User user) {
         return userRepository.save(user);
     }
