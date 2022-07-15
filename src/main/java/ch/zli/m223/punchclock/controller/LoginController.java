@@ -20,6 +20,7 @@ import java.security.Principal;
  * @date 12.07.2022
  */
 
+// Jeder kann /login aufrufen.
 @RestController
 @RequestMapping("/login")
 public class LoginController {
@@ -30,6 +31,9 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    // Das Basic-Login läuft mit Spring-Security. Nach einem erfolgreichen Basic-Login,
+    // wird diese Methode aufgerufen welche einen JWT generiert und diesen mit dem Benutzer
+    // an den Anfrager zurücksendet.
     @GetMapping
     public ResponseEntity<?> getUser(Principal principal) {
         if(principal == null) {

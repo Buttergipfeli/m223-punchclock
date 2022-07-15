@@ -22,6 +22,8 @@ import java.util.List;
  * @date 12.07.2022
  */
 
+// Nur USER und MODERATOR können /users aufrufen, allerdings gilt dies nicht für alle
+// Methoden.
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -35,11 +37,16 @@ public class UserController {
     @Autowired
     private MottoService mottoService;
 
+    // Diese GET-API holt alle Benutzer von der Datenbank. Nur MODERATOR können diese
+    // GET-API aufrufen.
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity(userService.findAllUsers(), HttpStatus.OK);
     }
 
+    // Mit dieser GET-API kann man einen Benutzer per id finden. Als USER,
+    // kann man nur seinen eigenen Benutzer per id finden. Als MODERATOR
+    // kann man alle Benutzer per id finden.
     @GetMapping("/{id}")
     public ResponseEntity<User> findUserById(@PathVariable("id") Long id, Principal principal) {
         User user = userService.findById(id);
@@ -53,6 +60,9 @@ public class UserController {
         return new ResponseEntity("No permission", HttpStatus.UNAUTHORIZED);
     }
 
+    // In dieser PUT-API kann man das Passwort eines Benutzers ändern
+    // Als USER kann man nur sein eigenes Passwort ändern.
+    // Als MODERATOR kann man die Passwörter aller Benutzer ändern.
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<User> updateUser(@Valid @RequestBody User user, @PathVariable("id") Long id, Principal principal) {
@@ -68,6 +78,8 @@ public class UserController {
         return new ResponseEntity(user, HttpStatus.UNAUTHORIZED);
     }
 
+    // In dieser DELETE-API können MODERATOR einzelne Benutzer per id
+    // löschen.
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deleteUserById(@PathVariable("id") Long id) {

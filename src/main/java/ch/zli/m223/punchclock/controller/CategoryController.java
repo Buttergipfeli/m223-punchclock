@@ -18,6 +18,7 @@ import java.util.List;
  * @date 13.07.2022
  */
 
+// Nur MODERATOREN und BENUTZER können /categories anfragen.
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
@@ -25,6 +26,8 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    // Diese GET-API wird alle Kategorien, welche in der Datenbank abgespeichert sind
+    // dem Anfrager senden.
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories() {
         return new ResponseEntity(categoryService.findAll(), HttpStatus.OK);

@@ -22,6 +22,7 @@ import java.util.List;
  * @date 13.07.2022
  */
 
+// USER und MODERATOR können /mottos aufrufen.
 @RestController
 @RequestMapping("/mottos")
 public class MottoController {
@@ -35,6 +36,7 @@ public class MottoController {
     @Autowired
     private CategoryService categoryService;
 
+    // Ein Motto wird in dieser POST-API erstellt.
     @PostMapping
     @Transactional
     public ResponseEntity<Motto> createMotto(@Valid @RequestBody Motto motto, Principal principal) {
@@ -43,6 +45,7 @@ public class MottoController {
         return new ResponseEntity(mottoService.createMotto(motto), HttpStatus.CREATED);
     }
 
+    // In dieser GET-API erhält der Anfrager alle Mottos, welche in der Datenbank gespeichert sind.
     @GetMapping
     public ResponseEntity<List<Motto>> getAllMottos() {
         return new ResponseEntity(mottoService.getAllMottos(), HttpStatus.OK);

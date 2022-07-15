@@ -25,6 +25,7 @@ import java.security.Principal;
  * @date 14.07.2022
  */
 
+// USER und MODERATOR können /mottopurchases aufrufen.
 @RestController
 @RequestMapping("/mottopurchases")
 public class MottoPurchaseController {
@@ -35,6 +36,10 @@ public class MottoPurchaseController {
     @Autowired
     private MottoService mottoService;
 
+    // In dieser POST-API kann man mottos kaufen. Hier wird geprüft ob ein Motto zu teuer
+    // für den käufer ist oder nicht und ob das Motto, welches man kaufen möchte überhaupt
+    // existiert. Ist alles gut, dann wird der Kauf akzeptiert. Dem Käufer wird der Betrag
+    // abgezogen und dem Verkäufer hinzugefügt.
     @PostMapping
     @Transactional
     public ResponseEntity<?> purchaseMotto(@Valid @RequestBody MottoPurchaseBody mottoPurchaseBody, Principal principal) {
