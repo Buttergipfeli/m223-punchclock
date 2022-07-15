@@ -1,6 +1,5 @@
 package ch.zli.m223.punchclock.jwt;
 
-import ch.zli.m223.punchclock.jwt.JWTTokenProvider;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

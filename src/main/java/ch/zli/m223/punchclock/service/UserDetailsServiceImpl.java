@@ -15,10 +15,11 @@ import java.util.Set;
 
 /**
  * @author Andre Kocher
- * @project Ampel_IDPA_BE
- * @package ch.kbw.idpa.ampel.service
- * @date 11.03.2022
+ * @project m223-punchlock
+ * @package ch.zli.m223.punchclock.service
+ * @date 12.07.2022
  */
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
