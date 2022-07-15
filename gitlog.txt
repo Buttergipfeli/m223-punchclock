@@ -1,0 +1,77 @@
+commit 36572323a4f2d44ac1af4eeda200be4a858a0ab0
+Author: Buttergipfeli <77845220+Buttergipfeli@users.noreply.github.com>
+Date:   Fri Jul 15 16:24:09 2022 +0200
+
+    added comments to the controllers
+
+commit 23ec5d848be39e4869e1e65023842dafe4fd9036
+Author: Buttergipfeli <77845220+Buttergipfeli@users.noreply.github.com>
+Date:   Fri Jul 15 15:42:03 2022 +0200
+
+     updated Readme with tutorial for theC application
+
+commit 9ecbd9eac3a22947036ddf9bac8cec496055f80f
+Author: Buttergipfeli <77845220+Buttergipfeli@users.noreply.github.com>
+Date:   Thu Jul 14 22:15:29 2022 +0200
+
+    antmatcher finished
+
+commit 6f17682272dc0723277d14cf19c26c1381a72c08
+Author: Buttergipfeli <77845220+Buttergipfeli@users.noreply.github.com>
+Date:   Thu Jul 14 22:11:53 2022 +0200
+
+    removed create user because h2 cant save but it can update users? It says password is null, even when i set it hardcoded
+
+commit 51f370b643c2012895b7541aea938542f4c6ac45
+Author: Buttergipfeli <77845220+Buttergipfeli@users.noreply.github.com>
+Date:   Thu Jul 14 19:55:28 2022 +0200
+
+    added antmatchers for /users
+
+commit 770d9dd711b95071596435d8b9294c395794c2aa
+Author: Buttergipfeli <77845220+Buttergipfeli@users.noreply.github.com>
+Date:   Thu Jul 14 16:34:13 2022 +0200
+
+    you can now delete users as a moderator
+
+commit 608a22a6c134f838bc1e1714c13210f0a5d684dc
+Author: Buttergipfeli <77845220+Buttergipfeli@users.noreply.github.com>
+Date:   Thu Jul 14 15:57:30 2022 +0200
+
+    you can now purchase mottos
+
+commit 83cf6fbd51761615542ed1421644254cb49dc8bf
+Author: Buttergipfeli <77845220+Buttergipfeli@users.noreply.github.com>
+Date:   Thu Jul 14 13:20:29 2022 +0200
+
+    moderators can now change the passwort of every user and he can also see every user
+
+commit a2711197c5c3a2b49f89707c0c75a17e8153bea5
+Author: Buttergipfeli <77845220+Buttergipfeli@users.noreply.github.com>
+Date:   Thu Jul 14 11:28:03 2022 +0200
+
+    you can now update the password of a user and also get all mottos and create a new motto
+
+commit add96ef58b92efa2122fd743655fef5bf276ab6b
+Author: Buttergipfeli <77845220+Buttergipfeli@users.noreply.github.com>
+Date:   Wed Jul 13 15:19:28 2022 +0200
+
+    some rest methods and all entities created
+
+commit 6e6446fff3014382699ec234a490a5b444b4d22b
+Author: Buttergipfeli <77845220+Buttergipfeli@users.noreply.github.com>
+Date:   Tue Jul 12 19:33:58 2022 +0200
+
+    removed spring sessions and I did some optimizations
+
+commit 6c03c8a46eabc1a4aad54c02c408583aa8160f1f
+Author: Buttergipfeli <77845220+Buttergipfeli@users.noreply.github.com>
+Date:   Tue Jul 12 18:58:37 2022 +0200
+
+    readme updated
+
+commit 2d11ad42bd5672b17171e255c513bc47086b4da9
+Author: Buttergipfeli <77845220+Buttergipfeli@users.noreply.github.com>
+Date:   Tue Jul 12 18:55:58 2022 +0200
+
+    initial commit with jwt
